@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useState, FC, ReactElement} from 'react'
+import { MusicInformation } from '../types'
+interface GalleryItemProps {
+    item: MusicInformation
+}
+const  GalleryItem: FC<GalleryItemProps> = ({item}): ReactElement => {
+    let [view, setView] = useState<boolean>(false)
 
-function GalleryItem(props){
-    let [view, setView] = useState(false)
-
-    const simpleView = () => {
+    const simpleView = (): ReactElement => {
         return (
             <div style={{
                 'width': '25vw',
@@ -12,13 +15,13 @@ function GalleryItem(props){
                 'margin' : '2px',
                 'position': 'relative'
             }}>
-                <h3>{props.item.trackName}</h3>
-                <h4>{props.item.collectionName}</h4>
+                <h3>{item.trackName}</h3>
+                <h4>{item.collectionName}</h4>
             </div>
         )
     }
 
-    const detailView = () => {
+    const detailView = (): ReactElement => {
         return (
             <div style={{
                 'width': '80vw',
@@ -26,21 +29,21 @@ function GalleryItem(props){
                 'border': '1px solid black',
                 'margin' : '2px',
                 'position': 'relative',
-                'backgroundImage': `url(${props.item.artworkUrl100})`,
+                'backgroundImage': `url(${item.artworkUrl100})`,
                 'backgroundRepeat': 'no-repeat',
                 'backgroundSize': 'cover',
                 'color': 'white'
             }}>
-                <h2>{props.item.trackName}</h2>
-                <h3>{props.item.collectionName}</h3>
-                <h4>{props.item.primaryGenreName}</h4>
-                <h4>{props.item.releaseDate}</h4>
+                <h2>{item.trackName}</h2>
+                <h3>{item.collectionName}</h3>
+                <h4>{item.primaryGenreName}</h4>
+                <h4>{item.releaseDate}</h4>
             </div>
         )
     }
 
     return (
-        <div onClick={() => setView(!view)}
+        <div onClick={(): void => setView(!view)}
         style={{'display': 'inline-block'}}>
             {view ? detailView() : simpleView()}
         </div>

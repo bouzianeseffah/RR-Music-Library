@@ -1,17 +1,17 @@
 import './App.css';
-import { useEffect, useState } from 'react'
+import { useEffect,FC,  useState,  FormEvent, ReactElement } from 'react'
 import Gallery from './components/Gallery'
 import SearchBar from './components/SearchBar'
-
-function App() {
-  let [searchTerm, setSearchTerm] = useState('')
-  let [data, setData] = useState([])
-  let [message, setMessage] = useState('Search for Music!')
+import { MusicInformation } from './types';
+const  App: FC = (): ReactElement => {
+  let [searchTerm, setSearchTerm] = useState<string>('')
+  let [data, setData] = useState<MusicInformation[]>([])
+  let [message, setMessage] = useState<string>('Search for Music!')
 
   useEffect(() => {
     if (searchTerm) {
       document.title=`${searchTerm} Music`
-      const fetchData = async () => {
+      const fetchData = async ():Promise<void> => {
         const response = await fetch(`https://itunes.apple.com/search?term=${searchTerm}`)
         const resData = await response.json()
         if(resData.results.length > 0) {
@@ -24,7 +24,7 @@ function App() {
   }
   }, [searchTerm])
 
-  const handleSearch = (e, term) => {
+  const handleSearch = (e: FormEvent<HTMLFormElement>, term: string): void => {
     e.preventDefault()
     setSearchTerm(term)
   }
